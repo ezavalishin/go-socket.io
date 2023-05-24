@@ -142,7 +142,7 @@ func newRedisBroadcast(nsp string, opts *RedisAdapterOptions) (*redisBroadcast, 
 }
 
 func (bc *redisBroadcast) publishToRedis(channel string, content []byte) error {
-	return bc.redisClient.Do(context.Background(), channel, content).Err()
+	return bc.redisClient.Do(context.Background(), "PUBLISH", channel, content).Err()
 	// c := bc.pool.Get()
 	// defer c.Close()
 
