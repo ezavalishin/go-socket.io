@@ -4,8 +4,6 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/gomodule/redigo/redis"
-
 	"github.com/googollee/go-socket.io/engineio"
 	"github.com/googollee/go-socket.io/logger"
 	"github.com/googollee/go-socket.io/parser"
@@ -30,23 +28,10 @@ func NewServer(opts *engineio.Options) *Server {
 
 // Adapter sets redis broadcast adapter.
 func (s *Server) Adapter(opts *RedisAdapterOptions) (bool, error) {
-	opts = getOptions(opts)
-	var redisOpts []redis.DialOption
-	if len(opts.Password) > 0 {
-		redisOpts = append(redisOpts, redis.DialPassword(opts.Password))
-	}
-	if opts.DB > 0 {
-		redisOpts = append(redisOpts, redis.DialDatabase(opts.DB))
-	}
-
-	conn, err := redis.Dial(opts.Network, opts.getAddr(), redisOpts...)
-	if err != nil {
-		return false, err
-	}
 
 	s.redisAdapter = opts
 
-	return true, conn.Close()
+	return true, nil
 }
 
 // Close closes server.
