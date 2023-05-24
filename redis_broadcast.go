@@ -307,6 +307,7 @@ func (bc *redisBroadcast) Len(room string) int {
 	bc.requests[req.RequestID] = &req
 	err = bc.publishToRedis(bc.reqChannel, reqJSON)
 	if err != nil {
+		fmt.Printf("err: %s", err.Error())
 		return -1
 	}
 
