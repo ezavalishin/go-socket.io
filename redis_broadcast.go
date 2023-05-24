@@ -290,11 +290,13 @@ func (bc *redisBroadcast) Len(room string) int {
 
 	reqJSON, err := json.Marshal(&req)
 	if err != nil {
+		fmt.Printf("error: %s", err.Error())
 		return -1
 	}
 
 	numSub, err := bc.getNumSub(bc.reqChannel)
 	if err != nil {
+		fmt.Printf("error: %s", err.Error())
 		return -1
 	}
 
